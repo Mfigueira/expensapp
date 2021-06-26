@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Modal from './components/Layout/Modal';
 import NewExpense from './components/NewExpense/NewExpense';
 import Expenses from './components/Expenses/Expenses';
 
@@ -26,12 +27,20 @@ const DUMMY_EXPENSES = [
 
 const App = () => {
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+  const [alertUser, setAlertUser] = useState(false);
 
-  const handleAddExpense = expense =>
+  const handleAddExpense = expense => {
     setExpenses(currExpenses => [expense, ...currExpenses]);
+    setAlertUser(true);
+  };
+
+  const handleOnConfirm = () => setAlertUser(false);
 
   return (
     <>
+      {alertUser && (
+        <Modal message="Expense added!" onConfirm={handleOnConfirm} />
+      )}
       <NewExpense onAddExpense={handleAddExpense} />
       <Expenses expenses={expenses} />
     </>

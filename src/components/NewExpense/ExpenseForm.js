@@ -24,6 +24,8 @@ const ExpenseForm = ({ onSubmitExpense, onHideForm }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (!title || !amount || !date) return;
+
     const expenseData = {
       title,
       amount: +amount,
